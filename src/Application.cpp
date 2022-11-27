@@ -8,6 +8,7 @@
 
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "VertexArray.h"
 
 static std::string readShader(std::string shaderPath)
 {
@@ -96,17 +97,15 @@ int main(void)
     };
 
     //VAO
-    unsigned int vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    
+    VertexArray vao;    
 
     //VBO
     VertexBuffer vbo(4 * 2 * sizeof(float), vertexArray);
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
-    glEnableVertexAttribArray(0);
-
+    //LAYOUT
+    VertexBufferLayout layout;
+    layout.push<float>(2);
+    vao.addBuffer(vbo, layout);
     //IBO
     IndexBuffer ibo(6, indices);
 
@@ -127,18 +126,18 @@ int main(void)
     
     vbo.unbind();
     ibo.unbind();
-    glBindVertexArray(0);
-
+    vao.unbind();
+    
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
-
+   
         glUseProgram(program);
         glUniform4f(location, 0.2, 0.3, 0.8, 1.0);
-        glBindVertexArray(vao);
+        vao.bind();
         ibo.bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-
+   
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
