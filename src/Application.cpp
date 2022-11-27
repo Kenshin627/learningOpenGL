@@ -1,66 +1,11 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
-#include <iostream>
-#include <fstream>
 #include <string>
-#include <sstream>
 
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
-
-static std::string readShader(std::string shaderPath)
-{
-    std::ifstream stream(shaderPath);
-    std::string line;
-    std::stringstream ss;
-    while (getline(stream,line))
-    {
-        ss << line << "\n";
-    }
-    stream.close();
-    return ss.str();
-}
-
-static unsigned int compileShader(unsigned int shaderType, const std::string& source)
-{
-    unsigned int shader = glCreateShader(shaderType);
-    const char* src = source.c_str();
-    glShaderSource(shader, 1, &src, nullptr);
-    glCompileShader(shader);
-
-    int shader_compiled;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &shader_compiled);
-    if (shader_compiled == GL_FALSE)
-    {
-        int length;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
-        char* message = (char*)_malloca(length * sizeof(char));
-        glGetShaderInfoLog(shader, length, &length, message);
-        std::string type = shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment";
-        std::cout << type << "Shader compile failed:" << message << "\n";
-        glDeleteShader(shader);
-        return 0;
-    }
-    return shader;
-}
-
-static unsigned int createShader(const std::string& vertexShader, const std::string& fragmentShader)
-{
-    unsigned int program = glCreateProgram();
-    unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
-    unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    glValidateProgram(program);
-    
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-    return program;
-}
+#include "Shader.h"
 
 int main(void)
 {
@@ -106,34 +51,27 @@ int main(void)
     VertexBufferLayout layout;
     layout.push<float>(2);
     vao.addBuffer(vbo, layout);
+
     //IBO
     IndexBuffer ibo(6, indices);
 
+    //Shader
+    Shader shader("resource/shaders/basic/");
+    shader.bind();
+    shader.SetUniform4f("u_Color", 0.2, 0.3, 0.8, 1.0);
 
-    std::string vertexShader = readShader("resource/shaders/basic/vertex.glsl");
-    std::string fragmentShader = readShader("resource/shaders/basic/fragment.glsl");
-    unsigned int program = createShader(vertexShader, fragmentShader);
-    glUseProgram(program); 
-
-    unsigned int location = glGetUniformLocation(program, "u_Color");
-    if (location != -1)
-    {
-        glUniform4f(location, 0.2, 0.3, 0.8, 1.0);
-    }
-
-    //clear
-    glUseProgram(0);
-    
+    ////clear
     vbo.unbind();
     ibo.unbind();
     vao.unbind();
+    shader.unbind();
     
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
    
-        glUseProgram(program);
-        glUniform4f(location, 0.2, 0.3, 0.8, 1.0);
+        shader.bind();
+        shader.SetUniform4f("u_Color", 0.2, 0.3, 0.8, 1.0);
         vao.bind();
         ibo.bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
@@ -144,7 +82,7 @@ int main(void)
         /* Poll for and process events */ 
         glfwPollEvents();
     }
-    glDeleteProgram(program);
+    
     glfwTerminate();
     return 0;
 } 

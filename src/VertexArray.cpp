@@ -23,6 +23,7 @@ void VertexArray::addBuffer(const VertexBuffer& vbo, const VertexBufferLayout& l
 	}
 }
 
+
 void VertexArray::bind() const
 {
 	glBindVertexArray(m_RendererID);
