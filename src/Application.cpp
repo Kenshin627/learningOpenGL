@@ -73,43 +73,55 @@ int main(void)
     }
 
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
 
     if (glewInit() != GLEW_OK)
     {
         std::cout << "[ERROR]: glew init error!\n";
     }
 
-    float vertexArray[6] = {
+    float vertexArray[12] = {
+        -0.5f, -0.5f,
+         0.5f, -0.5f,
+         0.5f, 0.5f,
         -0.5f, 0.5f,
-        0.0f, -0.5f,
-        0.5f, 0.5f
+
+    };
+    unsigned int indices[] = {
+        0, 1, 2,
+        2, 3, 0
     };
 
+    //VBO
     unsigned int vertexBuffer;
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), vertexArray, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), vertexArray, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
     glEnableVertexAttribArray(0);
+
+    //IBO
+    unsigned int ibo;
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
     std::string vertexShader = readShader("resource/shaders/basic/vertex.glsl");
     std::string fragmentShader = readShader("resource/shaders/basic/fragment.glsl");
     unsigned int program = createShader(vertexShader, fragmentShader);
-    glUseProgram(program);
+    glUseProgram(program); 
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
-
-        /* Render here */
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
-        /* Poll for and process events */
+        /* Poll for and process events */ 
         glfwPollEvents();
     }
     glDeleteProgram(program);
     glfwTerminate();
     return 0;
-}
+} 
