@@ -6,6 +6,9 @@
 #include <string>
 #include <sstream>
 
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+
 static std::string readShader(std::string shaderPath)
 {
     std::ifstream stream(shaderPath);
@@ -99,18 +102,14 @@ int main(void)
     
 
     //VBO
-    unsigned int vertexBuffer;
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), vertexArray, GL_STATIC_DRAW);
+    VertexBuffer vbo(4 * 2 * sizeof(float), vertexArray);
+
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
     glEnableVertexAttribArray(0);
 
     //IBO
-    unsigned int ibo;
-    glGenBuffers(1, &ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+    IndexBuffer ibo(6, indices);
+
 
     std::string vertexShader = readShader("resource/shaders/basic/vertex.glsl");
     std::string fragmentShader = readShader("resource/shaders/basic/fragment.glsl");
@@ -125,8 +124,9 @@ int main(void)
 
     //clear
     glUseProgram(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
+    vbo.unbind();
+    ibo.unbind();
     glBindVertexArray(0);
 
     while (!glfwWindowShouldClose(window))
@@ -136,7 +136,7 @@ int main(void)
         glUseProgram(program);
         glUniform4f(location, 0.2, 0.3, 0.8, 1.0);
         glBindVertexArray(vao);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        ibo.bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */

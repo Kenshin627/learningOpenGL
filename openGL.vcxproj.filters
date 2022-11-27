@@ -18,6 +18,12 @@
     <ClCompile Include="src\Application.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\VertexBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IndexBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\GLFW\lib-vc2022\glfw3.lib" />
@@ -30,9 +36,16 @@
     <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3native.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\VertexBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IndexBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\shaders\basic\fragment.glsl" />
     <None Include="resource\shaders\basic\vertex.glsl" />
+    <None Include=".gitignore" />
   </ItemGroup>
 </Project>
