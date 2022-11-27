@@ -96,7 +96,7 @@ int main(void)
     unsigned int vertexBuffer;
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), vertexArray, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), vertexArray, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
     glEnableVertexAttribArray(0);
 
@@ -110,6 +110,12 @@ int main(void)
     std::string fragmentShader = readShader("resource/shaders/basic/fragment.glsl");
     unsigned int program = createShader(vertexShader, fragmentShader);
     glUseProgram(program); 
+
+    unsigned int location = glGetUniformLocation(program, "u_Color");
+    if (location != -1)
+    {
+        glUniform4f(location, 0.2, 0.3, 0.8, 1.0);
+    }
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
