@@ -92,6 +92,12 @@ int main(void)
         2, 3, 0
     };
 
+    //VAO
+    unsigned int vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    
+
     //VBO
     unsigned int vertexBuffer;
     glGenBuffers(1, &vertexBuffer);
@@ -116,9 +122,21 @@ int main(void)
     {
         glUniform4f(location, 0.2, 0.3, 0.8, 1.0);
     }
+
+    //clear
+    glUseProgram(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glUseProgram(program);
+        glUniform4f(location, 0.2, 0.3, 0.8, 1.0);
+        glBindVertexArray(vao);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
