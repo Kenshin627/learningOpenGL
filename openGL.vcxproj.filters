@@ -31,4 +31,8 @@
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\shaders\basic\fragment.glsl" />
+    <None Include="resource\shaders\basic\vertex.glsl" />
+  </ItemGroup>
 </Project>
