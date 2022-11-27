@@ -33,14 +33,14 @@ void Shader::SetUniform4f(const std::string& name, float v1, float v2, float v3,
     glUniform4f(GetUniformLocation(name), v1, v2, v3, v4);
 }
 
-unsigned int Shader::GetUniformLocation(const std::string& name)
+int Shader::GetUniformLocation(const std::string& name)
 {
     if (uniforms.find(name) != uniforms.end())
     {
         return uniforms[name];
     }
-    unsigned int location = glGetUniformLocation(m_RendererID, "u_Color");
-    if (location != -1)
+    int location = glGetUniformLocation(m_RendererID, name.c_str());
+    if (location == -1)
     {
         std::cout << "can't find uniform" << name << "location\n";
     }
