@@ -51,7 +51,7 @@ int main(void)
         VertexBuffer vbo(4 * 4 * sizeof(float), vertexArray);
 
         //LAYOUT
-        VertexBufferLayout layout;
+        VertexBufferLayout layout;  
         layout.push<float>(2);
         layout.push<float>(2);
         vao.addBuffer(vbo, layout);
@@ -64,7 +64,7 @@ int main(void)
         shader.bind();
 
         //Transform
-        glm::mat4 proj = glm::orthoRH(-5.0, 5.0, -1.0, 1.0, -1.0, 1.0);
+        glm::mat4 proj = glm::ortho(-5.0, 5.0, -1.0, 1.0, -1.0, 1.0);
         shader.setUniformMat4v("u_Projection", proj);
 
         //Texture
