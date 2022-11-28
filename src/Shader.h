@@ -20,6 +20,7 @@ public:
 	void unbind() const;
 
 	void SetUniform4f(const std::string& name, float v1, float v2, float v3, float v4);
+	void SetUniform1i(const std::string& name, int v);
 private:
 	int GetUniformLocation(const std::string& name);
 	std::string readShader(std::string& shaderPath);

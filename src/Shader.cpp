@@ -33,6 +33,11 @@ void Shader::SetUniform4f(const std::string& name, float v1, float v2, float v3,
     glUniform4f(GetUniformLocation(name), v1, v2, v3, v4);
 }
 
+void Shader::SetUniform1i(const std::string& name, int v)
+{
+    glUniform1i(GetUniformLocation(name), v);
+}
+
 int Shader::GetUniformLocation(const std::string& name)
 {
     if (uniforms.find(name) != uniforms.end())

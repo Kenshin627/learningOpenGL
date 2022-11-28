@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Renderer.h"
+#include "Texture.h"
 
 int main(void)
 {
@@ -29,10 +30,10 @@ int main(void)
     {
         //Data
         float vertexArray[20] = {
-            -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-             0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            -0.5f, 0.5f, 0.5f, 0.5f, 0.5f
+            -0.5f, -0.5f, 0.0f, 0.0f,
+             0.5f, -0.5f, 1.0f, 0.0f,
+             0.5f, 0.5f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.0f, 1.0f
 
         };
         unsigned int indices[] = {
@@ -44,12 +45,12 @@ int main(void)
         VertexArray vao;
 
         //VBO
-        VertexBuffer vbo(4 * 5 * sizeof(float), vertexArray);
+        VertexBuffer vbo(4 * 4 * sizeof(float), vertexArray);
 
         //LAYOUT
         VertexBufferLayout layout;
         layout.push<float>(2);
-        layout.push<float>(3);
+        layout.push<float>(2);
         vao.addBuffer(vbo, layout);
 
         //IBO
@@ -58,7 +59,11 @@ int main(void)
         //Shader
         Shader shader("resource/shaders/basic/");
         shader.bind();
-        shader.SetUniform4f("u_Color", 0.2, 0.3, 0.8, 1.0);
+
+        //Texture
+        Texture texture("resource/textures/container.jpg");
+        texture.bind(0);
+        shader.SetUniform1i("sampler", 0);
 
         //clear
         vbo.unbind();
@@ -73,7 +78,6 @@ int main(void)
         {
             renderer.clear();
             shader.bind();
-            shader.SetUniform4f("u_Color", 0.2, 0.3, 0.8, 1.0);
             renderer.draw(vao, ibo, shader);
 
             glfwSwapBuffers(window);

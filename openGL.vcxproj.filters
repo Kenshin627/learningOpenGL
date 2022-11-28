@@ -33,6 +33,12 @@
     <ClCompile Include="src\Renderer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\vendor\stbImage\stb_image.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\GLFW\lib-vc2022\glfw3.lib" />
@@ -61,6 +67,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\stbImage\stb_image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Texture.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
