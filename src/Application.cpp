@@ -28,11 +28,11 @@ int main(void)
 
     {
         //Data
-        float vertexArray[12] = {
-            -0.5f, -0.5f,
-             0.5f, -0.5f,
-             0.5f, 0.5f,
-            -0.5f, 0.5f,
+        float vertexArray[20] = {
+            -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
+             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+             0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+            -0.5f, 0.5f, 0.5f, 0.5f, 0.5f
 
         };
         unsigned int indices[] = {
@@ -44,11 +44,12 @@ int main(void)
         VertexArray vao;
 
         //VBO
-        VertexBuffer vbo(4 * 2 * sizeof(float), vertexArray);
+        VertexBuffer vbo(4 * 5 * sizeof(float), vertexArray);
 
         //LAYOUT
         VertexBufferLayout layout;
         layout.push<float>(2);
+        layout.push<float>(3);
         vao.addBuffer(vbo, layout);
 
         //IBO
