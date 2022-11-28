@@ -2,10 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
+#include "Renderer.h"
 
 int main(void)
 {
@@ -62,21 +59,21 @@ int main(void)
         shader.bind();
         shader.SetUniform4f("u_Color", 0.2, 0.3, 0.8, 1.0);
 
-        ////clear
+        //clear
         vbo.unbind();
         ibo.unbind();
         vao.unbind();
         shader.unbind();
 
+        //Renderer
+        Renderer renderer;
+
         while (!glfwWindowShouldClose(window))
         {
-            glClear(GL_COLOR_BUFFER_BIT);
-
+            renderer.clear();
             shader.bind();
             shader.SetUniform4f("u_Color", 0.2, 0.3, 0.8, 1.0);
-            vao.bind();
-            ibo.bind();
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            renderer.draw(vao, ibo, shader);
 
             glfwSwapBuffers(window);
             glfwPollEvents();
