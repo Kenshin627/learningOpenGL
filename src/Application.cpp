@@ -5,6 +5,9 @@
 #include "Renderer.h"
 #include "Texture.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 int main(void)
 {
     GLFWwindow* window;
@@ -59,6 +62,10 @@ int main(void)
         //Shader
         Shader shader("resource/shaders/basic/");
         shader.bind();
+
+        //Transform
+        glm::mat4 proj = glm::orthoRH(-5.0, 5.0, -1.0, 1.0, -1.0, 1.0);
+        shader.setUniformMat4v("u_Projection", proj);
 
         //Texture
         Texture texture("resource/textures/container.jpg");
