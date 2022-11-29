@@ -10,5 +10,6 @@ void Renderer::draw(const VertexArray& vao, const IndexBuffer& ibo, const Shader
 
 void Renderer::clear() const
 {
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }

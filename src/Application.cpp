@@ -13,6 +13,7 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "test/TestClearcolor.h"
 #include "test/Test.h"
+#include "test/TestMenu.h"
 
 int main(void)
 {
@@ -93,25 +94,39 @@ int main(void)
         Renderer renderer;
 
         //Test
-        test::TestClearcolor testclearColor;
+        test::Test* currentTest = nullptr;
+        test::TestMenu* testMenu = new test::TestMenu(currentTest);
+        currentTest = testMenu;
+        testMenu->RegisterTest<test::TestClearcolor>("testClearcolor");
 
         while (!glfwWindowShouldClose(window))
         {
-            //renderer.clear();
-            testclearColor.onRender();
-
+            renderer.clear();
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
+            if (currentTest)
+            {
+                currentTest->onUpdate(0.0f);
+                currentTest->onRender();
+                ImGui::Begin("test");
+                if (currentTest != testMenu && ImGui::Button("<-"))
+                {
+                    delete currentTest;
+                    currentTest = testMenu;
+                }            
+                currentTest->onImGuiRender();
+                ImGui::End();
+            }
+
             shader.bind();
-            
             glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
             glm::mat4 mvp = proj * view * model;
             shader.setUniformMat4v("u_Mvp", mvp);
             renderer.draw(vao, ibo, shader);
+
             {
-                testclearColor.onImGuiRender();
                 ImGui::Begin("OpenGL Renderer");
                 ImGui::SliderFloat3("translation", &translation.x, -.5f, 0.5f);
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);

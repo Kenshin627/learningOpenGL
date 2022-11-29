@@ -63,6 +63,9 @@
     <ClCompile Include="src\test\TestClearcolor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\test\TestMenu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\GLFW\lib-vc2022\glfw3.lib" />
@@ -975,6 +978,9 @@
     <ClInclude Include="src\test\TestClearcolor.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\test\TestMenu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\shaders\basic\fragment.glsl" />
@@ -1388,5 +1394,13 @@
     <None Include="src\vendor\glm\gtx\wrap.inl">
       <Filter>头文件</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\textures\container.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resource\textures\t.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>
