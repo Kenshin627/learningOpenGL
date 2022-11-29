@@ -69,6 +69,12 @@
     <ClCompile Include="src\test\TestTexture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\TestCamera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\GLFW\lib-vc2022\glfw3.lib" />
@@ -985,6 +991,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\test\TestTexture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test\TestCamera.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
