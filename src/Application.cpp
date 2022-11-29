@@ -2,18 +2,13 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
-#include "Renderer.h"
-#include "Texture.h"
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "test/TestClearcolor.h"
 #include "test/Test.h"
 #include "test/TestMenu.h"
+#include "test/TestTexture.h"
 
 int main(void)
 {
@@ -22,7 +17,7 @@ int main(void)
     if (!glfwInit())
         return -1;
 
-    window = glfwCreateWindow(1024, 768, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1024, 768, "OpenGL Renderer", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -42,66 +37,17 @@ int main(void)
     }
 
     {
-        //Data
-        float vertexArray[20] = {
-            -0.5f, -0.5f, 0.0f, 0.0f,
-             0.5f, -0.5f, 1.0f, 0.0f,
-             0.5f, 0.5f, 1.0f, 1.0f,
-            -0.5f, 0.5f, 0.0f, 1.0f
-
-        };
-        unsigned int indices[] = {
-            0, 1, 2,
-            2, 3, 0
-        };
-
-        //VAO
-        VertexArray vao;
-
-        //VBO
-        VertexBuffer vbo(4 * 4 * sizeof(float), vertexArray);
-
-        //LAYOUT
-        VertexBufferLayout layout;  
-        layout.push<float>(2);
-        layout.push<float>(2);
-        vao.addBuffer(vbo, layout);
-
-        //IBO
-        IndexBuffer ibo(6, indices);
-
-        //Shader
-        Shader shader("resource/shaders/basic/");
-        shader.bind();
-
-        //Transform
-        glm::mat4 proj = glm::ortho(-1., 1., -1.0, 1.0, -1.0, 1.0);
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::fvec3 translation(0.5f, 0.0f, 0.0f);
-        
-        //Texture
-        Texture texture("resource/textures/container.jpg");
-        texture.bind(0);
-        shader.SetUniform1i("sampler", 0);
-
-        //clear
-        vbo.unbind();
-        ibo.unbind();
-        vao.unbind();
-        shader.unbind();
-
-        //Renderer
-        Renderer renderer;
-
         //Test
         test::Test* currentTest = nullptr;
         test::TestMenu* testMenu = new test::TestMenu(currentTest);
         currentTest = testMenu;
         testMenu->RegisterTest<test::TestClearcolor>("testClearcolor");
+        testMenu->RegisterTest<test::TestTexture>("test Texture");
 
         while (!glfwWindowShouldClose(window))
         {
-            renderer.clear();
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
@@ -119,26 +65,17 @@ int main(void)
                 currentTest->onImGuiRender();
                 ImGui::End();
             }
-
-            shader.bind();
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
-            glm::mat4 mvp = proj * view * model;
-            shader.setUniformMat4v("u_Mvp", mvp);
-            renderer.draw(vao, ibo, shader);
-
-            {
-                ImGui::Begin("OpenGL Renderer");
-                ImGui::SliderFloat3("translation", &translation.x, -.5f, 0.5f);
-                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-                ImGui::End();
-            }
-
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
-
+        if (currentTest != testMenu)
+        {
+            delete testMenu;
+        }
+        delete currentTest;
+        
         glfwTerminate();
     }
     ImGui_ImplOpenGL3_Shutdown();
