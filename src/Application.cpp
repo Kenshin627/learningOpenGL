@@ -11,6 +11,9 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include "test/TestClearcolor.h"
+#include "test/Test.h"
+
 int main(void)
 {
     GLFWwindow* window;
@@ -89,9 +92,13 @@ int main(void)
         //Renderer
         Renderer renderer;
 
+        //Test
+        test::TestClearcolor testclearColor;
+
         while (!glfwWindowShouldClose(window))
         {
-            renderer.clear();
+            //renderer.clear();
+            testclearColor.onRender();
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
@@ -104,6 +111,7 @@ int main(void)
             shader.setUniformMat4v("u_Mvp", mvp);
             renderer.draw(vao, ibo, shader);
             {
+                testclearColor.onImGuiRender();
                 ImGui::Begin("OpenGL Renderer");
                 ImGui::SliderFloat3("translation", &translation.x, -.5f, 0.5f);
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
