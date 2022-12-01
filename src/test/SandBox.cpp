@@ -1,9 +1,9 @@
 #include <imgui/imgui.h>
 
-#include "TestTexture.h"
+#include "SandBox.h"
 
 namespace test {
-    TestTexture::TestTexture(const ImVec2& viewport):viewport(viewport),
+    SandBox::SandBox() :m_Viewport({ 0, 0 }),
         translation(glm::vec3(0.5f, 0.0f, 0.0f)),
         m_Proj(glm::ortho(-1., 1., -1.0, 1.0, -1.0, 1.0)),
         m_View(glm::mat4(1.0f)),
@@ -22,8 +22,6 @@ namespace test {
             2, 3, 0
         };
 
-        
-      
         //VAO
         m_VAO = std::make_unique<VertexArray>();
 
@@ -52,30 +50,38 @@ namespace test {
 
         //Renderer
         m_Renderer = std::make_unique<Renderer>();
-
-        //FBO
-        m_FBO = std::make_unique<FrameBuffer>(viewport[0], viewport[1]);
 	}
 
-	TestTexture::~TestTexture() {}
+    SandBox::~SandBox() {}
 
-	void TestTexture::onUpdate(float deltaTime) {}
+	void SandBox::onUpdate(float deltaTime) {}
 
-	void TestTexture::onRender() 
+	void SandBox::onRender()
     {
         m_Renderer->clear();        
         m_Shader->bind();        
         m_Model = glm::translate(glm::mat4(1.0f), translation);
         glm::mat4 mvp = m_Proj * m_View * m_Model;
         m_Shader->setUniformMat4v("u_Mvp", mvp);
-        m_FBO->bind();
-        //m_Renderer->clear();
+        if (m_FBO)
+        {
+            m_FBO->bind();
+        }
         m_Renderer->draw(*m_VAO, *m_IBO, *m_Shader);
     }
 
-    void TestTexture::onImGuiRender()
+    void SandBox::onImGuiRender()
     {
         ImGui::SliderFloat3("translation", &translation.x, -.5f, 0.5f);
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f /ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    }
+    void SandBox::buildFBO(const glm::vec2& viewport)
+    {
+        if (m_FBO)
+        {
+            m_FBO.reset();
+        }
+        m_Viewport = viewport;
+        m_FBO = std::make_unique<FrameBuffer>(viewport.x, viewport.y);
     }
 }

@@ -4,7 +4,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Test.h"
 #include "FrameBuffer.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
@@ -12,10 +11,10 @@
 #include "VertexBufferLayout.h"
 #include "Shader.h"
 #include "Texture.h"
-#include <Renderer.h>
+#include "Renderer.h"
 
 namespace test {
-	class TestTexture
+	class SandBox
 	{
 	private:
 		std::unique_ptr<FrameBuffer> m_FBO;
@@ -29,15 +28,16 @@ namespace test {
 		glm::vec3 translation;
 		glm::mat4 m_Proj, m_View, m_Model;
 
-		ImVec2 viewport;
+		glm::vec2 m_Viewport;
 		
 	public:
-		TestTexture(const ImVec2& viewport);
-		~TestTexture();
+		SandBox();
+		~SandBox();
 	public:
 		void onUpdate(float deltaTime);
 		void onRender();
 		void onImGuiRender();
+		void buildFBO(const glm::vec2& viewport);
 		inline FrameBuffer& getFBO() const { return *m_FBO; };
 	};
 }

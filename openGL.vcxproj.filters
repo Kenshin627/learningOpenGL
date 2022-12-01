@@ -60,10 +60,7 @@
     <ClCompile Include="src\vendor\imgui\imgui_impl_opengl3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\test\TestMenu.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\test\TestTexture.cpp">
+    <ClCompile Include="src\test\SandBox.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\Camera.cpp">
@@ -978,19 +975,10 @@
     <ClInclude Include="src\vendor\imgui\imgui_impl_opengl3.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\test\Test.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\test\TestMenu.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\test\TestTexture.h">
+    <ClInclude Include="src\test\SandBox.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\Camera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UIRender.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\FrameBuffer.h">

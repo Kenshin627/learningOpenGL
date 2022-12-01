@@ -10,9 +10,9 @@ FrameBuffer::FrameBuffer(unsigned int width, unsigned int height):viewport_Width
 	TextureAttachment();
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		std::cout << "[ERROR]: FRAME BUFFER initialized error!";
+		std::cout << "[ERROR]: FRAME BUFFER initialize error!";
 	}
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 FrameBuffer::~FrameBuffer()

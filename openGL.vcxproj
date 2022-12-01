@@ -161,8 +161,7 @@
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
-    <ClCompile Include="src\test\TestMenu.cpp" />
-    <ClCompile Include="src\test\TestTexture.cpp" />
+    <ClCompile Include="src\test\SandBox.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_demo.cpp" />
@@ -187,10 +186,8 @@
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
-    <ClInclude Include="src\test\TestMenu.h" />
-    <ClInclude Include="src\test\TestTexture.h" />
+    <ClInclude Include="src\test\SandBox.h" />
     <ClInclude Include="src\Texture.h" />
-    <ClInclude Include="src\UIRender.h" />
     <ClInclude Include="src\UI\ImGuiInstance.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
@@ -486,7 +483,6 @@
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\VertexBuffer.h" />
     <ClInclude Include="src\VertexBufferLayout.h" />
-    <ClInclude Include="src\test\Test.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
