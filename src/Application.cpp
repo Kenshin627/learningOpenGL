@@ -17,7 +17,7 @@ int main(void)
     if (!glfwInit())
         return -1;
 
-    window = glfwCreateWindow(1024, 768, "OpenGL Renderer", NULL, NULL);
+    window = glfwCreateWindow(1920, 1080, "OpenGL Renderer", NULL, NULL);
     if (!window) 
     {
         glfwTerminate();

@@ -191,6 +191,7 @@
     <ClInclude Include="src\test\TestTexture.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\UIRender.h" />
+    <ClInclude Include="src\UI\ImGuiInstance.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_vector_relational.hpp" />

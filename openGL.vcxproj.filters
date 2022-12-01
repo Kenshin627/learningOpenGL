@@ -996,6 +996,9 @@
     <ClInclude Include="src\FrameBuffer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\UI\ImGuiInstance.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\shaders\basic\fragment.glsl" />
