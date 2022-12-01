@@ -486,6 +486,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="imgui.ini" />
     <None Include="resource\shaders\basic\fragment.glsl" />
     <None Include="resource\shaders\basic\vertex.glsl" />
     <None Include="src\vendor\glm\detail\func_common.inl" />

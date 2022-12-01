@@ -1400,6 +1400,7 @@
     <None Include="src\vendor\glm\gtx\wrap.inl">
       <Filter>头文件</Filter>
     </None>
+    <None Include="imgui.ini" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
