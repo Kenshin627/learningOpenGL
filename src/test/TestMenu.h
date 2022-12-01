@@ -11,7 +11,7 @@ namespace test {
 		Test*& m_currentTest;
 		std::vector<std::pair< std::string, std::function<Test*()>>> m_Tests;
 	public:
-		TestMenu(Test*& test);
+		TestMenu(Test*& test, const ImVec2& viewport);
 		~TestMenu();
 
 		virtual void onUpdate(float deltaTime) override;
@@ -19,9 +19,9 @@ namespace test {
 		virtual void onImGuiRender() override;
 
 		template<typename T>
-		void RegisterTest(const std::string& name)
+		void RegisterTest(const std::string& name, const ImVec2& viewport)
 		{
-			m_Tests.push_back(std::make_pair(name, []() { return new T(); }));
+			m_Tests.push_back(std::make_pair(name, []() { return new T(viewport); }));
 		}
 	};
 }

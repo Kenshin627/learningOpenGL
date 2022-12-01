@@ -3,7 +3,7 @@
 #include "TestMenu.h"
 
 namespace test {
-	TestMenu::TestMenu(Test*& test):m_currentTest(test) {}
+	TestMenu::TestMenu(Test*& test, const ImVec2& viewport):Test(viewport), m_currentTest(test) {}
 	TestMenu::~TestMenu() {}
 
 	void TestMenu::onUpdate(float deltaTime) {}

@@ -3,7 +3,7 @@
 #include "TestTexture.h"
 
 namespace test {
-	TestTexture::TestTexture():
+    TestTexture::TestTexture(const ImVec2& viewport):viewport(viewport),
         translation(glm::vec3(0.5f, 0.0f, 0.0f)),
         m_Proj(glm::ortho(-1., 1., -1.0, 1.0, -1.0, 1.0)),
         m_View(glm::mat4(1.0f)),
@@ -21,6 +21,8 @@ namespace test {
             0, 1, 2,
             2, 3, 0
         };
+
+        
       
         //VAO
         m_VAO = std::make_unique<VertexArray>();
@@ -50,6 +52,9 @@ namespace test {
 
         //Renderer
         m_Renderer = std::make_unique<Renderer>();
+
+        //FBO
+        m_FBO = std::make_unique<FrameBuffer>(viewport[0], viewport[1]);
 	}
 
 	TestTexture::~TestTexture() {}
@@ -63,6 +68,8 @@ namespace test {
         m_Model = glm::translate(glm::mat4(1.0f), translation);
         glm::mat4 mvp = m_Proj * m_View * m_Model;
         m_Shader->setUniformMat4v("u_Mvp", mvp);
+        m_FBO->bind();
+        //m_Renderer->clear();
         m_Renderer->draw(*m_VAO, *m_IBO, *m_Shader);
     }
 
