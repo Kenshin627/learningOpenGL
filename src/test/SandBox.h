@@ -12,6 +12,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "Renderer.h"
+#include "Camera.h"
 
 namespace test {
 	class SandBox
@@ -29,9 +30,10 @@ namespace test {
 		glm::mat4 m_Proj, m_View, m_Model;
 
 		glm::vec2 m_Viewport;
+		Camera camera;
 		
 	public:
-		SandBox();
+		SandBox(const Camera& camera);
 		~SandBox();
 	public:
 		void onUpdate(float deltaTime);

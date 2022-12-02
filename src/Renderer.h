@@ -8,6 +8,7 @@
 class Renderer
 {
 public:
-	void draw(const VertexArray& vao, const IndexBuffer& ibo, const Shader& shader) const;
+	void drawElements(const VertexArray& vao, const IndexBuffer& ibo, const Shader& shader) const;
+	void drawArray(const VertexArray& vao, const Shader& shader, unsigned int count) const;
 	void clear() const;
 };

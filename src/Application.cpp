@@ -6,6 +6,7 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "test/SandBox.h"
+#include "Camera.h"
 
 int main(void)
 {
@@ -98,18 +99,25 @@ int main(void)
 
 #pragma endregion
 
+#pragma region Camera
+
+    Camera camera(45.0f, 1.f, 200.0f, 400.0f, 300.0f, { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f }, 10.0f);
+
+#pragma endregion
+
+
 #pragma region SandBox
 
-    test::SandBox sandbox;      
+    test::SandBox sandbox{ camera };
 
 #pragma endregion
 
 #pragma region Game Renderloop
 
     while (!glfwWindowShouldClose(window))
-    {
+    {       
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -171,13 +179,14 @@ int main(void)
         ImGui::Begin("Viewport");
         ImGui::BeginChild("Game Renderer");
         ImVec2 viewport = ImGui::GetWindowSize();
-
+        
         sandbox.buildFBO({ viewport.x, viewport.y });
         sandbox.onUpdate(0.0f);
+
         sandbox.onRender();
         sandbox.getFBO().unbind();
-
-        ImGui::Image((void*)(sandbox.getFBO().GetTextureID()), viewport, ImVec2(0, 1), ImVec2(1,0));
+        
+        ImGui::Image((void*)(intptr_t)(sandbox.getFBO().GetTextureID()), viewport, ImVec2(0, 1), ImVec2(1,0));
         ImGui::EndChild();
         ImGui::End();
         ImGui::ShowDemoWindow();

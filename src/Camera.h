@@ -6,7 +6,7 @@
 class Camera
 {
 private:
-	float verticalFov;
+	float verticalFov; //in Radian
 	float nearPlane;
 	float farPlane;
 	float viewportWidth;

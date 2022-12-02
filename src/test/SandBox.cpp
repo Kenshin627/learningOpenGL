@@ -3,45 +3,80 @@
 #include "SandBox.h"
 
 namespace test {
-    SandBox::SandBox() :m_Viewport({ 0, 0 }),
+    SandBox::SandBox(const Camera& camera) :m_Viewport({ 0, 0 }), camera(camera),
         translation(glm::vec3(0.5f, 0.0f, 0.0f)),
-        m_Proj(glm::ortho(-1., 1., -1.0, 1.0, -1.0, 1.0)),
-        m_View(glm::mat4(1.0f)),
         m_Model(glm::translate(glm::mat4(1.0f), translation))
 	{
         //Data
-        float vertexArray[20] = {
-            -0.5f, -0.5f, 0.0f, 0.0f,
-             0.5f, -0.5f, 1.0f, 0.0f,
-             0.5f, 0.5f, 1.0f, 1.0f,
-            -0.5f, 0.5f, 0.0f, 1.0f
+        float vertexArray[180] = {
+              -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+               0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+               0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+               0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+              -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+              -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
+              -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+               0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+               0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+               0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+              -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+              -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+              
+              -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+              -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+              -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+              -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+              -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+              -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+               0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+               0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+               0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+               0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+               0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+               0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+              -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+               0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+               0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+               0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+              -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+              -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+              
+              -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+               0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+               0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+               0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+              -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+              -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
         };
         unsigned int indices[] = {
-            0, 1, 2,
-            2, 3, 0
+            0, 2, 1,
+            0, 3, 2
         };
 
         //VAO
         m_VAO = std::make_unique<VertexArray>();
 
         //VBO
-        m_VBO = std::make_unique<VertexBuffer>(4.0f * 4.0f * sizeof(float), vertexArray);
+        m_VBO = std::make_unique<VertexBuffer>(36.0f, 36.0f * 5.0f * sizeof(float), vertexArray);
 
         //LAYOUT
         VertexBufferLayout layout;
-        layout.push<float>(2);
+        layout.push<float>(3);
         layout.push<float>(2);
         m_VAO->addBuffer(*m_VBO, layout);
 
         //IBO
-        m_IBO = std::make_unique<IndexBuffer>(6, indices);
+        //m_IBO = std::make_unique<IndexBuffer>(36, indices);
         
         //Shader
         m_Shader = std::make_unique<Shader>("resource/shaders/basic/");
         m_Shader->bind();
 
         //Transform
+        //m_Model = glm::rotate(m_Model, 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 
         //Texture
         m_Texture = std::make_unique<Texture>("resource/textures/container.jpg");
@@ -60,14 +95,16 @@ namespace test {
     {
         m_Renderer->clear();        
         m_Shader->bind();        
-        m_Model = glm::translate(glm::mat4(1.0f), translation);
-        glm::mat4 mvp = m_Proj * m_View * m_Model;
+        //m_Model = glm::translate(glm::mat4(1.0f), translation);
+        m_Model = glm::rotate(m_Model, 0.01f, glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 mvp = camera.GetProjection() * camera.GetView() * m_Model;
         m_Shader->setUniformMat4v("u_Mvp", mvp);
         if (m_FBO)
         {
             m_FBO->bind();
         }
-        m_Renderer->draw(*m_VAO, *m_IBO, *m_Shader);
+        m_Renderer->clear();
+        m_Renderer->drawArray(*m_VAO, *m_Shader, m_VBO->GetCount());
     }
 
     void SandBox::onImGuiRender()
