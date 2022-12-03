@@ -116,8 +116,6 @@ int main(void)
 
     while (!glfwWindowShouldClose(window))
     {       
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -176,10 +174,14 @@ int main(void)
             ImGui::EndMenuBar();
         }
 
+        
+
         ImGui::Begin("Viewport");
         ImGui::BeginChild("Game Renderer");
         ImVec2 viewport = ImGui::GetWindowSize();
-        
+        //camera.viewportWidth = viewport.x;
+        //camera.viewportHeight = viewport.y;
+        //camera.CompoteProjection();
         sandbox.buildFBO({ viewport.x, viewport.y });
         sandbox.onUpdate(0.0f);
 

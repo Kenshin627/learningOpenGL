@@ -2,7 +2,6 @@
 
 void Renderer::drawElements(const VertexArray& vao, const IndexBuffer& ibo, const Shader& shader) const
 {
-	glEnable(GL_DEPTH_TEST);
 	shader.bind();
 	vao.bind();
 	ibo.bind();
@@ -11,7 +10,6 @@ void Renderer::drawElements(const VertexArray& vao, const IndexBuffer& ibo, cons
 
 void Renderer::drawArray(const VertexArray& vao, const Shader& shader, unsigned int count) const
 {
-	glEnable(GL_DEPTH_TEST);
 	shader.bind();
 	vao.bind();
 	glDrawArrays(GL_TRIANGLES, 0, count);

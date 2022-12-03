@@ -5,7 +5,7 @@
 
 class Camera
 {
-private:
+public:
 	float verticalFov; //in Radian
 	float nearPlane;
 	float farPlane;
@@ -15,10 +15,11 @@ private:
 	glm::vec3 m_Direction;
 	glm::vec3 m_Up;
 	float speed;
+private:
 	glm::mat4 view;
 	glm::mat4 projection;
 public:
-	Camera(float verticalFov, float nearPlane, float farPlane, float viewportWidth, float viewportHeight, const glm::vec3& pos, const glm::vec3& direction, const glm::vec3& up, float speed);
+	Camera(float verticalFov, float nearPlane, float farPlane, float width, float height, const glm::vec3& pos, const glm::vec3& direction, const glm::vec3& up, float speed);
 	~Camera();
 public:
 	void ComputeView();

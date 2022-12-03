@@ -93,6 +93,7 @@ namespace test {
 
 	void SandBox::onRender()
     {
+        glEnable(GL_DEPTH_TEST);
         m_Renderer->clear();        
         m_Shader->bind();        
         //m_Model = glm::translate(glm::mat4(1.0f), translation);
