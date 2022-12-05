@@ -69,6 +69,9 @@
     <ClCompile Include="src\FrameBuffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Lights\PointLight.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\GLFW\lib-vc2022\glfw3.lib" />
@@ -987,6 +990,9 @@
     <ClInclude Include="src\UI\ImGuiInstance.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Lights\PointLight.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\shaders\basic\fragment.glsl" />
@@ -1401,8 +1407,13 @@
       <Filter>头文件</Filter>
     </None>
     <None Include="imgui.ini" />
+<<<<<<< HEAD
     <None Include="resource\shaders\BlinnPhong\vertex.glsl" />
     <None Include="resource\shaders\BlinnPhong\fragment.glsl" />
+=======
+    <None Include="resource\shaders\BlinPhong\vertex.glsl" />
+    <None Include="resource\shaders\BlinPhong\fragment.glsl" />
+>>>>>>> f44f585f1501c7997382d402c0eebb1201754663
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">

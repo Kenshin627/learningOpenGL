@@ -30,10 +30,10 @@ namespace test {
 		glm::mat4 m_Proj, m_View, m_Model;
 
 		glm::vec2 m_Viewport;
-		Camera camera;
+		Camera* camera;
 		
 	public:
-		SandBox(const Camera& camera);
+		SandBox(Camera* camera);
 		~SandBox();
 	public:
 		void onUpdate(float deltaTime);

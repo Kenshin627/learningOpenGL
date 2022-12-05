@@ -4,7 +4,11 @@
 #include ""
 
 namespace test {
+<<<<<<< HEAD
     SandBox::SandBox(const Camera& camera, PointLight& light) :m_Viewport({ 0, 0 }), camera(camera),
+=======
+    SandBox::SandBox(Camera* camera) :m_Viewport({ 0, 0 }), camera(camera),
+>>>>>>> f44f585f1501c7997382d402c0eebb1201754663
         translation(glm::vec3(0.5f, 0.0f, 0.0f)),
         m_Model(glm::translate(glm::mat4(1.0f), translation))
 	{
@@ -99,7 +103,7 @@ namespace test {
         m_Shader->bind();        
         //m_Model = glm::translate(glm::mat4(1.0f), translation);
         m_Model = glm::rotate(m_Model, 0.01f, glm::vec3(0.0f, 1.0f, 0.0f));
-        glm::mat4 mvp = camera.GetProjection() * camera.GetView() * m_Model;
+        glm::mat4 mvp = camera->GetProjection() * camera->GetView() * m_Model;
         m_Shader->setUniformMat4v("u_Mvp", mvp);
         m_Shader->setUniformMat4v("u_Model", m_Model);
         m_Shader->setUniformMat3v("u_itModel", glm::transpose(glm::inverse(m_Model)));
