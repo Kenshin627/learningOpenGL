@@ -15,6 +15,7 @@ public:
 	glm::vec3 m_Direction;
 	glm::vec3 m_Up;
 	float speed;
+	glm::vec3 m_Right;
 private:
 	glm::mat4 view;
 	glm::mat4 projection;

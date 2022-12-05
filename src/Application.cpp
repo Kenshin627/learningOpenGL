@@ -8,12 +8,31 @@
 #include "test/SandBox.h"
 #include "Camera.h"
 
+void processInput(GLFWwindow* window, Camera* camera, float deltaTime);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+bool firstMouse = true;
+float lastX = 1920 / 2;
+float lastY = 1080 / 2;
+float yaw = -90.0f;
+float pitch = 0.0f;
+
+#pragma region Camera
+
+Camera camera(45.0f, 1.f, 200.0f, 400.0f, 300.0f, { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f }, 10.0f);
+
+#pragma endregion
+
 int main(void)
 {
 #pragma region window Init
 
+    float currentTime = 0.0f;
+    float lastTime = 0.0f;
+    float deltaTime = 0.0f;
     GLFWwindow* window;
-
+    
     if (!glfwInit())
         return -1;
 
@@ -26,7 +45,9 @@ int main(void)
     
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
-
+    //glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     if (glewInit() != GLEW_OK)
     {
         std::cout << "[ERROR]: glew init error!\n";
@@ -99,23 +120,24 @@ int main(void)
 
 #pragma endregion
 
-#pragma region Camera
-
-    Camera camera(45.0f, 1.f, 200.0f, 400.0f, 300.0f, { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f }, 10.0f);
-
-#pragma endregion
-
-
 #pragma region SandBox
 
-    test::SandBox sandbox{ camera };
+    test::SandBox sandbox(&camera);
 
 #pragma endregion
 
 #pragma region Game Renderloop
 
     while (!glfwWindowShouldClose(window))
-    {       
+    {      
+        //deltaTime
+        currentTime = glfwGetTime();
+        deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+
+        //Input
+        processInput(window, &camera, deltaTime);
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -179,9 +201,10 @@ int main(void)
         ImGui::Begin("Viewport");
         ImGui::BeginChild("Game Renderer");
         ImVec2 viewport = ImGui::GetWindowSize();
-        //camera.viewportWidth = viewport.x;
-        //camera.viewportHeight = viewport.y;
-        //camera.CompoteProjection();
+
+        camera.viewportWidth = viewport.x;
+        camera.viewportHeight = viewport.y;
+        camera.CompoteProjection();
         sandbox.buildFBO({ viewport.x, viewport.y });
         sandbox.onUpdate(0.0f);
 
@@ -213,3 +236,66 @@ int main(void)
     ImGui::DestroyContext();
     return 0;
 } 
+
+void processInput(GLFWwindow* window, Camera* camera, float deltaTime)
+{
+    float speed = camera->speed * deltaTime;
+    glm::vec3 forward = camera->m_Direction;
+    glm::vec3 right = camera->m_Right;
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+        camera->m_Position += speed * forward;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        camera->m_Position -= speed * forward;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
+        camera->m_Position -= speed * right;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
+        camera->m_Position += speed * right;
+    }
+    camera->ComputeView();
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+    float xoffset = xpos - lastX;
+    float yoffset = ypos - lastY;
+    lastX = xpos;
+    lastY = ypos;
+
+    float sensitivity = 0.0001f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    if (pitch > 89.0f)
+        pitch = 89.0f;
+    if (pitch < -89.0f)
+        pitch = -89.0f;
+
+    glm::vec3 direction;
+    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    direction.y = sin(glm::radians(pitch));
+    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    camera.m_Direction = glm::normalize(direction);
+    camera.ComputeView();
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    camera.verticalFov -= (float)yoffset * 0.01;
+    if (camera.verticalFov < 1.0f)
+        camera.verticalFov = 1.0f;
+    if (camera.verticalFov > 45.0f)
+        camera.verticalFov = 45.0f;
+}

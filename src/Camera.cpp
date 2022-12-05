@@ -10,6 +10,9 @@ Camera::~Camera() {}
 
 void Camera::ComputeView()
 {
+	m_Direction = glm::normalize(m_Direction);
+	m_Up = glm::normalize(m_Up);
+	m_Right = glm::cross(m_Direction, m_Up);
 	view = glm::lookAt(m_Position, m_Position + m_Direction, m_Up);
 }
 
