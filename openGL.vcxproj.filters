@@ -1401,6 +1401,8 @@
       <Filter>头文件</Filter>
     </None>
     <None Include="imgui.ini" />
+    <None Include="resource\shaders\BlinnPhong\vertex.glsl" />
+    <None Include="resource\shaders\BlinnPhong\fragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
