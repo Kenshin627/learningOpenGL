@@ -7,6 +7,7 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "test/SandBox.h"
 #include "Camera.h"
+#include "Lights/PointLight.h"
 
 void processInput(GLFWwindow* window, Camera* camera, float deltaTime);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -23,6 +24,13 @@ float pitch = 0.0f;
 Camera camera(45.0f, 1.f, 200.0f, 400.0f, 300.0f, { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f }, 10.0f);
 
 #pragma endregion
+
+#pragma region Light
+
+PointLight light(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+
+#pragma endregion
+
 
 int main(void)
 {
