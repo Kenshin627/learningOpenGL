@@ -491,13 +491,10 @@
     <None Include="imgui.ini" />
     <None Include="resource\shaders\basic\fragment.glsl" />
     <None Include="resource\shaders\basic\vertex.glsl" />
-<<<<<<< HEAD
+
     <None Include="resource\shaders\BlinnPhong\fragment.glsl" />
     <None Include="resource\shaders\BlinnPhong\vertex.glsl" />
-=======
-    <None Include="resource\shaders\BlinPhong\fragment.glsl" />
-    <None Include="resource\shaders\BlinPhong\vertex.glsl" />
->>>>>>> f44f585f1501c7997382d402c0eebb1201754663
+
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />

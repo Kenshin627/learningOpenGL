@@ -27,7 +27,7 @@ Camera camera(45.0f, 1.f, 200.0f, 400.0f, 300.0f, { 0.0f, 0.0f, -6.0f }, { 0.0f,
 
 #pragma region Light
 
-PointLight light(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+PointLight light(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 
 #pragma endregion
 
@@ -130,7 +130,7 @@ int main(void)
 
 #pragma region SandBox
 
-    test::SandBox sandbox(&camera);
+    test::SandBox sandbox(camera, light);
 
 #pragma endregion
 

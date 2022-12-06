@@ -1407,13 +1407,10 @@
       <Filter>头文件</Filter>
     </None>
     <None Include="imgui.ini" />
-<<<<<<< HEAD
+
     <None Include="resource\shaders\BlinnPhong\vertex.glsl" />
     <None Include="resource\shaders\BlinnPhong\fragment.glsl" />
-=======
-    <None Include="resource\shaders\BlinPhong\vertex.glsl" />
-    <None Include="resource\shaders\BlinPhong\fragment.glsl" />
->>>>>>> f44f585f1501c7997382d402c0eebb1201754663
+
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">

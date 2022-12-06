@@ -12,4 +12,6 @@ public:
 	~PointLight();
 	inline void setColor(const glm::vec3& color) { m_Color = color; }
 	inline void setPosition(const glm::vec3& position) { m_Position = position; }
+	inline glm::vec3& getColor() { return m_Color; };
+	inline glm::vec3& getPosition() { return m_Position; }
 };

@@ -14,7 +14,7 @@ uniform vec3 lightPosition;
 uniform vec3 eyePosition;
 
 in vec3 v_Position;
-in vec3 v_normal;
+in vec3 v_Normal;
 
 
 
@@ -22,9 +22,9 @@ in vec3 v_normal;
 void main()
 {
 	float ambientStrength = 0.1;
-	vec3 ambient = material.ambientColor * lightColor;
+	vec3 ambient = material.ambientColor * lightColor * ambientStrength;
 
-	vec3 normal = normalize(v_normal);
+	vec3 normal = normalize(v_Normal);
 	vec3 lightDir = normalize(lightPosition - v_Position);
 	float diffuseStrength = max(dot(normal, lightDir), 0.0);
 	vec3 diffuse = material.diffuseColor * diffuseStrength * lightColor;

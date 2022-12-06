@@ -1,14 +1,9 @@
 #include <imgui/imgui.h>
 
 #include "SandBox.h"
-#include ""
 
 namespace test {
-<<<<<<< HEAD
-    SandBox::SandBox(const Camera& camera, PointLight& light) :m_Viewport({ 0, 0 }), camera(camera),
-=======
-    SandBox::SandBox(Camera* camera) :m_Viewport({ 0, 0 }), camera(camera),
->>>>>>> f44f585f1501c7997382d402c0eebb1201754663
+    SandBox::SandBox(Camera& camera, PointLight& light):m_Viewport({ 0, 0 }), camera(camera),light(light),
         translation(glm::vec3(0.5f, 0.0f, 0.0f)),
         m_Model(glm::translate(glm::mat4(1.0f), translation))
 	{
@@ -103,11 +98,17 @@ namespace test {
         m_Shader->bind();        
         //m_Model = glm::translate(glm::mat4(1.0f), translation);
         m_Model = glm::rotate(m_Model, 0.01f, glm::vec3(0.0f, 1.0f, 0.0f));
-        glm::mat4 mvp = camera->GetProjection() * camera->GetView() * m_Model;
+        glm::mat4 mvp = camera.GetProjection() * camera.GetView() * m_Model;
         m_Shader->setUniformMat4v("u_Mvp", mvp);
         m_Shader->setUniformMat4v("u_Model", m_Model);
-        m_Shader->setUniformMat3v("u_itModel", glm::transpose(glm::inverse(m_Model)));
-        m_Shader->
+        m_Shader->setUniformMat3v("u_itModel", glm::mat3(glm::transpose(glm::inverse(m_Model))));
+        m_Shader->setUniform3f("material.ambientColor", 0.1, 0.1, 0.1);
+        m_Shader->setUniform3f("material.diffuseColor", 0.1, 0.8, 0.1);
+        m_Shader->setUniform3f("material.specularColor", 0.8, 0.8, 0.8);
+        m_Shader->SetUniform1f("material.shininess", 32.0f);
+        m_Shader->setUniform3f("lightColor", light.getColor().x, light.getColor().y, light.getColor().z);
+        m_Shader->setUniform3f("lightPosition", light.getPosition().x, light.getPosition().y, light.getPosition().z);
+        m_Shader->setUniform3f("eyePosition", camera.m_Position.x, camera.m_Position.y, camera.m_Position.z);
         if (m_FBO)
         {
             m_FBO->bind();
@@ -119,6 +120,8 @@ namespace test {
     void SandBox::onImGuiRender()
     {
         ImGui::SliderFloat3("translation", &translation.x, -.5f, 0.5f);
+        ImGui::SliderFloat3("lightColor", &light.getColor().x, 0.0, 1.0);
+        ImGui::SliderFloat3("lightPostion", &light.getPosition().x, -2.0f, 2.0f);
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f /ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     }
     void SandBox::buildFBO(const glm::vec2& viewport)
