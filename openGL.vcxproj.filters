@@ -72,6 +72,9 @@
     <ClCompile Include="src\Lights\PointLight.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Materials\BlinnPhongBaseMaterial.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\GLFW\lib-vc2022\glfw3.lib" />
@@ -1407,10 +1410,9 @@
       <Filter>头文件</Filter>
     </None>
     <None Include="imgui.ini" />
-
     <None Include="resource\shaders\BlinnPhong\vertex.glsl" />
     <None Include="resource\shaders\BlinnPhong\fragment.glsl" />
-
+    <None Include="src\Materials\BlinnPhongBaseMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">

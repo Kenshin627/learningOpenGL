@@ -1,7 +1,6 @@
 #include "Shader.h"
 #include <GL/glew.h>
 
-
 Shader::Shader(const std::string& filePath):m_FilePath(filePath),m_RendererID(0)
 {
     std::string vertexPath = filePath + "vertex.glsl";
@@ -28,9 +27,9 @@ void Shader::unbind() const
     glUseProgram(0);
 }
 
-void Shader::SetUniform4f(const std::string& name, float v1, float v2, float v3, float v4)
+void Shader::SetUniform4f(const std::string& name, const glm::vec4& v)
 {
-    glUniform4f(GetUniformLocation(name), v1, v2, v3, v4);
+    glUniform4f(GetUniformLocation(name), v.x, v.y, v.z, v.w);
 }
 
 void Shader::SetUniform1i(const std::string& name, int v)
@@ -43,9 +42,9 @@ void Shader::SetUniform1f(const std::string& name, float v)
     glUniform1f(GetUniformLocation(name), v);
 }
 
-void Shader::setUniform3f(const std::string& name, float v1, float v2, float v3)
+void Shader::setUniform3f(const std::string& name, const glm::vec3& v)
 {
-    glUniform3f(GetUniformLocation(name), v1, v2, v3);
+    glUniform3f(GetUniformLocation(name), v.x, v.y, v.z);
 }
 
 void Shader::setUniformMat4v(const std::string& name, const glm::mat4& matrix)

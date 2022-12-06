@@ -14,6 +14,7 @@
 #include "Renderer.h"
 #include "Camera.h"
 #include "Lights/PointLight.h"
+#include "Materials/BlinnPhongBaseMaterial.h"
 
 namespace test {
 	class SandBox
@@ -23,9 +24,10 @@ namespace test {
 		std::unique_ptr<IndexBuffer> m_IBO;
 		std::unique_ptr<VertexBuffer> m_VBO;
 		std::unique_ptr<VertexArray> m_VAO;
-		std::unique_ptr<Shader> m_Shader; 
+		//std::unique_ptr<Shader> m_Shader; 
 		std::unique_ptr<Texture> m_Texture;
 		std::unique_ptr<Renderer> m_Renderer;
+		std::unique_ptr<BlinnPhongMaterial> m_Material;
 
 		glm::vec3 translation;
 		glm::mat4 m_Proj, m_View, m_Model;

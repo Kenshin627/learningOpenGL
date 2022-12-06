@@ -74,7 +74,7 @@ int main(void)
         style->WindowRounding = 0.0f;
         style->Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
-    io.Fonts->AddFontFromFileTTF("./resource/fonts/msyh.ttc", 16, NULL, io.Fonts->GetGlyphRangesChineseFull());
+    io.Fonts->AddFontFromFileTTF("./resource/fonts/JetBrainsMono-SemiBold.ttf", 18, NULL, io.Fonts->GetGlyphRangesChineseFull());
     
     style->WindowPadding = ImVec2(15, 15);
     style->WindowRounding = 5.0f;

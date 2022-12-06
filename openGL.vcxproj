@@ -160,6 +160,7 @@
     <ClCompile Include="src\FrameBuffer.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Materials\BlinnPhongBaseMaterial.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\test\SandBox.cpp" />
@@ -491,10 +492,9 @@
     <None Include="imgui.ini" />
     <None Include="resource\shaders\basic\fragment.glsl" />
     <None Include="resource\shaders\basic\vertex.glsl" />
-
     <None Include="resource\shaders\BlinnPhong\fragment.glsl" />
     <None Include="resource\shaders\BlinnPhong\vertex.glsl" />
-
+    <None Include="src\Materials\BlinnPhongBaseMaterial.h" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
